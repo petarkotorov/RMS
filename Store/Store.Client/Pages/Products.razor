@@ -1,0 +1,52 @@
+﻿@page "/products"
+
+<h3>Products</h3>
+
+@if (this.IsLoading)
+{
+    <p>Loading data</p>
+}
+else if (this.ShowError)
+{
+    <p class="text-danger">Products load unsuccessful.</p>
+}
+else
+{
+    <div class="d-flex justify-content-start mb-3">
+        <button class="btn btn-primary"
+                @onclick="this.AddProduct">
+            Add Product
+        </button>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Min Price</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in this.ProductsSource)
+            {
+                <tr>
+                    <td>@p.Name</td>
+                    <td>@p.Description</td>
+                    <td>@p.Price</td>
+                    <td>@p.MinPrice</td>
+                    <td>@p.CreatedOn.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@p.UpdatedOn.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>
+                        <NavLink class="btn btn-primary btn-sm" href="@($"/products/edit/{p.Id}")">
+                            Edit
+                        </NavLink>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
